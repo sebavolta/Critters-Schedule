@@ -7,7 +7,7 @@ import java.util.List;
  * to the database directly.
  */
 public class CustomerDTO {
-    private long id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private String notes;
