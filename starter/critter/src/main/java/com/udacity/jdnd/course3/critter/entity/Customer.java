@@ -20,7 +20,7 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    public Customer() {}
+//    public Customer() {}
 
     public Customer(Long id, String name, String phoneNumber, String notes, List<Pet> pets) {
         this.id = id;
