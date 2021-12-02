@@ -13,6 +13,17 @@ public class CustomerDTO {
     private String notes;
     private List<Long> petIds;
 
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", notes='" + notes + '\'' +
+                ", petIds=" + petIds +
+                '}';
+    }
+
     public long getId() {
         return id;
     }

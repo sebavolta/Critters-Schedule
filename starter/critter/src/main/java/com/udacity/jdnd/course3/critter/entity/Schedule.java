@@ -13,14 +13,17 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToMany
-    private List<Employee> employees;
-
     private LocalDate date;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<EmployeeSkill> skills;
+
+    @ManyToMany
+    private List<Pet> pets;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Employee> employees;
 
     public Schedule(){}
 
@@ -29,6 +32,7 @@ public class Schedule {
         this.employees = employees;
         this.date = date;
         this.skills = skills;
+        this.pets = pets;
     }
 
     public long getId() {
@@ -61,5 +65,13 @@ public class Schedule {
 
     public void setSkills(Set<EmployeeSkill> skills) {
         this.skills = skills;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 }

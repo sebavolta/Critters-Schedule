@@ -18,6 +18,18 @@ public class PetDTO {
         return type;
     }
 
+    @Override
+    public String toString() {
+        return "PetDTO{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", ownerId=" + ownerId +
+                ", birthDate=" + birthDate +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
+
     public void setType(PetType type) {
         this.type = type;
     }

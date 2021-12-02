@@ -1,6 +1,7 @@
-package com.udacity.jdnd.course3.critter.pet;
+package com.udacity.jdnd.course3.critter.controller;
 
 import com.udacity.jdnd.course3.critter.entity.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetDTO;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,8 @@ public class PetController {
     public List<PetDTO> getPets(){
         List<Pet> thePets = this.petService.getPets();
 
-        return thePets.stream().map(pet ->
-                this.petService.convertPetToDTO(pet)
+        return thePets.stream()
+                .map(pet -> this.petService.convertPetToDTO(pet)
         ).collect(Collectors.toList());
     }
 

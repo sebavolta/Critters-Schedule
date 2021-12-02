@@ -17,17 +17,27 @@ public class Customer {
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Pet> pets;
+    private List<Long> petsId;
 
-//    public Customer() {}
+    public Customer() {}
 
-    public Customer(Long id, String name, String phoneNumber, String notes, List<Pet> pets) {
+    public Customer(Long id, String name, String phoneNumber, String notes, List<Long> petsId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.notes = notes;
-        this.pets = pets;
+        this.petsId = petsId;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", notes='" + notes + '\'' +
+                ", pets=" + petsId +
+                '}';
     }
 
     public Long getId() {
@@ -62,11 +72,11 @@ public class Customer {
         this.notes = notes;
     }
 
-    public List<Pet> getPets() {
-        return pets;
+    public List<Long> getPets() {
+        return petsId;
     }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
+    public void setPets(List<Long> petsId) {
+        this.petsId = petsId;
     }
 }

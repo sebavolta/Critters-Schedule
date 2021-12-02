@@ -15,7 +15,6 @@ public class Pet {
 
     private PetType type;
 
-
     private Long ownerId;
 
     @Nationalized
@@ -24,8 +23,19 @@ public class Pet {
     private LocalDate birthDate;
     private String notes;
 
-    @ManyToOne
-    private Customer customer;
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", type=" + type +
+                ", ownerId=" + ownerId +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", notes='" + notes + '\'' +
+
+                '}';
+    }
 
     public Long getId() {
         return id;
@@ -75,11 +85,5 @@ public class Pet {
         this.notes = notes;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 }

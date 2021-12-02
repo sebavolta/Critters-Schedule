@@ -33,6 +33,7 @@ public class PetService {
 
     public PetDTO convertPetToDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
+        System.out.println("PET ----------------------------------------- " + pet);
         petDTO.setId(pet.getId());
         petDTO.setType(pet.getType());
         petDTO.setName(pet.getName());
@@ -45,7 +46,9 @@ public class PetService {
 
     public Pet convertPetDTOToPet(PetDTO petDTO) {
         Pet thePet = new Pet();
+        System.out.println("petDTO ----------------------------------------- " + petDTO);
         thePet.setId(petDTO.getId());
+        thePet.setOwnerId(petDTO.getOwnerId());
         thePet.setType(petDTO.getType());
         thePet.setName(petDTO.getName());
         thePet.setBirthDate(petDTO.getBirthDate());

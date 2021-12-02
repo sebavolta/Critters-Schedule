@@ -29,6 +29,19 @@ public class Employee {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees", cascade = CascadeType.REMOVE)
     private List<Schedule> schedule;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", skills=" + skills +
+                ", daysAvailable=" + daysAvailable +
+                ", schedule=" + schedule +
+                '}';
+    }
+
+    public Employee(){}
+
     public Employee(Long id, String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable, List<Schedule> schedule) {
         this.id = id;
         this.name = name;
