@@ -17,7 +17,9 @@ public class Customer {
     private String phoneNumber;
     private String notes;
 
-    private List<Long> petsId;
+    @Column
+    @ElementCollection(targetClass=Long.class)
+    private List<Long> petIds;
 
     public Customer() {}
 
@@ -26,7 +28,7 @@ public class Customer {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.notes = notes;
-        this.petsId = petsId;
+        this.petIds = petIds;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", notes='" + notes + '\'' +
-                ", pets=" + petsId +
+                ", petIds=" + petIds +
                 '}';
     }
 
@@ -73,10 +75,10 @@ public class Customer {
     }
 
     public List<Long> getPets() {
-        return petsId;
+        return petIds;
     }
 
-    public void setPets(List<Long> petsId) {
-        this.petsId = petsId;
+    public void setPets(List<Long> petIds) {
+        this.petIds = petIds;
     }
 }

@@ -15,5 +15,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "where c.id=:id")*/
     //Customer findCustomerByPetId(@Param("id") long id);
 
-    Customer findByPetsIdContaining(@Param("id") long id);
+    Customer findByPetIdsContaining(@Param("id") long id);
 }

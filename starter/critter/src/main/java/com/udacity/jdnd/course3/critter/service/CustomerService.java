@@ -28,7 +28,7 @@ public class CustomerService {
     }
 
     public Customer findCustomerByPetId(Long id) {
-        return this.customerRepository.findByPetsIdContaining(id);
+        return this.customerRepository.findByPetIdsContaining(id);
     }
 
     public Customer findById(Long id) {

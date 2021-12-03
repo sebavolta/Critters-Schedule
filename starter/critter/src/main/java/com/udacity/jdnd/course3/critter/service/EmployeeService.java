@@ -19,12 +19,15 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public void save(Employee newEmployee) {
-        this.employeeRepository.save(newEmployee);
+    public Employee save(Employee newEmployee) {
+
+        System.out.println("SAVED -----" + newEmployee);
+        return this.employeeRepository.save(newEmployee);
+
     }
 
     public Employee findEmployeeById(Long id) {
-        return this.employeeRepository.findById(id).get();
+        return this.employeeRepository.findById(id).isPresent() ? this.employeeRepository.findById(id).get() : null;
     }
 
     public void setEmployeeAvailability(Set<DayOfWeek> daysAvailable, Long id) {

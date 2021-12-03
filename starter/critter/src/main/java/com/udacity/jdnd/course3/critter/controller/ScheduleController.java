@@ -83,8 +83,10 @@ public class ScheduleController {
         Set<ScheduleDTO> scheduleDTOSet = new HashSet<>();
 
         for (Long petId: customer.getPets()) {
-            List<ScheduleDTO> scheduleDTOList = getScheduleForPet(petId);
-            scheduleDTOSet.addAll(scheduleDTOList);
+            if(this.petService.getSinglePet(petId) != null) {
+                List<ScheduleDTO> scheduleDTOList = getScheduleForPet(petId);
+                scheduleDTOSet.addAll(scheduleDTOList);
+            }
         }
 
         return new ArrayList<>(scheduleDTOSet);

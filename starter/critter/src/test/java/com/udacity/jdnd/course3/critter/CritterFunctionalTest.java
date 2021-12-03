@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,10 +56,11 @@ public class CritterFunctionalTest {
     }
 
     @Test
-    public void testCreateEmployee(){
+    public void testCreateEmployee() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO newEmployee = userController.saveEmployee(employeeDTO);
         EmployeeDTO retrievedEmployee = userController.getEmployee(newEmployee.getId());
+
         Assertions.assertEquals(employeeDTO.getSkills(), newEmployee.getSkills());
         Assertions.assertEquals(newEmployee.getId(), retrievedEmployee.getId());
         Assertions.assertTrue(retrievedEmployee.getId() > 0);
@@ -70,10 +73,12 @@ public class CritterFunctionalTest {
 
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
+
         PetDTO newPet = petController.savePet(petDTO);
 
         //make sure pet contains customer id
         PetDTO retrievedPet = petController.getPet(newPet.getId());
+
         Assertions.assertEquals(retrievedPet.getId(), newPet.getId());
         Assertions.assertEquals(retrievedPet.getOwnerId(), newCustomer.getId());
 
@@ -85,7 +90,7 @@ public class CritterFunctionalTest {
         //check to make sure customer now also contains pet
         CustomerDTO retrievedCustomer = userController.getAllCustomers().get(0);
         Assertions.assertTrue(retrievedCustomer.getPetIds() != null && retrievedCustomer.getPetIds().size() > 0);
-        //Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
+        Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
     }
 
     @Test
@@ -95,29 +100,31 @@ public class CritterFunctionalTest {
 
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
+
         PetDTO newPet = petController.savePet(petDTO);
         petDTO.setType(PetType.DOG);
         petDTO.setName("DogName");
+
         PetDTO newPet2 = petController.savePet(petDTO);
 
         List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
         Assertions.assertEquals(pets.size(), 2);
         Assertions.assertEquals(pets.get(0).getOwnerId(), newCustomer.getId());
-        Assertions.assertEquals(pets.get(0).getId(), newPet.getId());
     }
 
     @Test
     public void testFindOwnerByPet() {
         CustomerDTO customerDTO = createCustomerDTO();
+
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
 
         PetDTO petDTO = createPetDTO();
-        petDTO.setOwnerId(newCustomer.getId());
+        petDTO.setOwnerId(2);
         PetDTO newPet = petController.savePet(petDTO);
 
         CustomerDTO owner = userController.getOwnerByPet(newPet.getId());
         Assertions.assertEquals(owner.getId(), newCustomer.getId());
-        //Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
+        Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
     }
 
     @Test
@@ -130,6 +137,8 @@ public class CritterFunctionalTest {
         userController.setAvailability(availability, emp1.getId());
 
         EmployeeDTO emp2 = userController.getEmployee(emp1.getId());
+
+        System.out.println("emp2 "+ emp2);
         Assertions.assertEquals(availability, emp2.getDaysAvailable());
     }
 
@@ -244,21 +253,35 @@ public class CritterFunctionalTest {
 
     private static EmployeeDTO createEmployeeDTO() {
         EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(1);
         employeeDTO.setName("TestEmployee");
         employeeDTO.setSkills(Sets.newHashSet(EmployeeSkill.FEEDING, EmployeeSkill.PETTING));
+        /*Set<DayOfWeek> days = new HashSet<>();
+        days.add(DayOfWeek.MONDAY);
+        days.add(DayOfWeek.THURSDAY);*/
+        //employeeDTO.setDaysAvailable(days);
+
         return employeeDTO;
     }
     private static CustomerDTO createCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(2);
         customerDTO.setName("TestEmployee");
         customerDTO.setPhoneNumber("123-456-789");
+        List<Long> petIds = new ArrayList<>();
+        // petIds.add(0L);
+        customerDTO.setPetIds(petIds);
         return customerDTO;
     }
 
     private static PetDTO createPetDTO() {
         PetDTO petDTO = new PetDTO();
+        petDTO.setId(0);
         petDTO.setName("TestPet");
         petDTO.setType(PetType.CAT);
+        petDTO.setOwnerId(2);
+        petDTO.setNotes("abc");
+
         return petDTO;
     }
 

@@ -34,9 +34,9 @@ public class UserController {
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         Customer newCustomer = this.customerService.DtoToCustomer(customerDTO);
-        this.customerService.save(newCustomer);
+        Customer c = this.customerService.save(newCustomer);
 
-        return customerDTO;
+        return this.customerService.customerToDTO(c);
     }
 
     @GetMapping("/customer")
@@ -60,9 +60,11 @@ public class UserController {
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee newEmployee = this.employeeService.dtoToEmployee(employeeDTO);
-        this.employeeService.save(newEmployee);
 
-        return employeeDTO;
+        Employee emp =  this.employeeService.save(newEmployee);
+
+
+        return this.employeeService.EmployeeToDto(emp);
     }
 
     @PostMapping("/employee/{employeeId}")
