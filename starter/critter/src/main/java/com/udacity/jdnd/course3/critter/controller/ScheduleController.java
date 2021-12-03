@@ -42,9 +42,9 @@ public class ScheduleController {
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         Schedule schedule = this.scheduleService.DtoToSchedule(scheduleDTO);
-        this.scheduleService.save(schedule);
+        Schedule sc = this.scheduleService.save(schedule);
 
-        return scheduleDTO;
+        return this.scheduleService.scheduleToDTO(sc);
     }
 
     @GetMapping

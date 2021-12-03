@@ -3,8 +3,7 @@ package com.udacity.jdnd.course3.critter.service;
 import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.entity.Schedule;
-import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
-import com.udacity.jdnd.course3.critter.repository.PetRepository;
+
 import com.udacity.jdnd.course3.critter.repository.ScheduleRepository;
 import com.udacity.jdnd.course3.critter.schedule.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,25 @@ public class ScheduleService {
     ScheduleRepository scheduleRepository;
 
     @Autowired
-    PetRepository petRepository;
+    PetService petService;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    EmployeeService employeeService;
 
-    public void save(Schedule schedule) {
-        this.scheduleRepository.save(schedule);
+    public Schedule save(Schedule schedule) {
+        Schedule sc = this.scheduleRepository.save(schedule);
+
+        sc.getEmployees().stream().forEach(employee -> {
+            Employee e = this.employeeService.findEmployeeById(employee.getId());
+
+            List<Schedule> scheduleList = new ArrayList<>();
+            scheduleList.add(sc);
+            e.setSchedule(scheduleList);
+
+            this.employeeService.save(e);
+        });
+
+        return sc;
     }
 
     public List<Schedule> findAllSchedules() {
@@ -44,13 +55,13 @@ public class ScheduleService {
         List<Employee> theEmployees = new ArrayList<>();
 
         for (Long employeeId : scheduleDTO.getEmployeeIds()) {
-            theEmployees.add(this.employeeRepository.findById(employeeId).get());
+            theEmployees.add(this.employeeService.findEmployeeById(employeeId));
         }
 
         List<Pet> thePets = new ArrayList<>();
 
         for (Long petId : scheduleDTO.getPetIds()) {
-            thePets.add(this.petRepository.findById(petId).get());
+            thePets.add(this.petService.getSinglePet(petId));
         }
 
         newSchedule.setEmployees(theEmployees);
