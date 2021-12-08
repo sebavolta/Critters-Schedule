@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class CustomerService {
 
@@ -23,7 +22,6 @@ public class CustomerService {
     }
 
     public List<Customer> findAllCustomers() {
-        System.out.println("All Customer ---------------" + this.customerRepository.findAll());
         return this.customerRepository.findAll();
     }
 
@@ -46,8 +44,6 @@ public class CustomerService {
         customerDTO.setPhoneNumber(currentCustomer.getPhoneNumber());
         customerDTO.setNotes(currentCustomer.getNotes());
 
-        System.out.println("CUSTOMER TO DTO ----------------------> " + customerDTO);
-
         return customerDTO;
     }
 
@@ -61,8 +57,6 @@ public class CustomerService {
         customer.setNotes(customerDTO.getNotes());
 
         customer.setPets(customerDTO.getPetIds());
-
-        System.out.println("CUSTOMER ----------------------> " + customer);
 
         return customer;
     }
